@@ -14,9 +14,10 @@ unsigned int tmpPin;
 bool operacja;
 bool menu = true;
 
-void konta::wczytaj()
+bool konta::wczytaj()
 {
-	ifstream dane("dane.txt");
+	ifstream dane;
+	dane.open("dane.txt");
 	if (dane.good())
 	{
 		if(listaKont.pierwsze==nullptr)
@@ -40,13 +41,15 @@ void konta::wczytaj()
 			dane >> tmpKonta->imie;
 			dane >> tmpKonta->nazwisko;
 		}
+		dane.close();
+		return true;
 	}
 	else
 	{
 		cout << "Nie udalo sie poprawnie zaladowac pliku. Nacisnij klawisz aby kontynuowac...";
 		getchar();
+		return false;
 	}
-	dane.close();
 }
 
 
@@ -132,31 +135,33 @@ void start()
 	ukryjKursor();
 	pozycjaKursora();
 	ramka();
-	listaKont.wczytaj();
+	if (listaKont.wczytaj())
+	{
 
-	bool czyPoprawnyPin;
-	string podajPin = "Podaj pin: ";
-	string niePoprawny = "Niepoprwany pin. Sprobuj ponownie. ";
+		bool czyPoprawnyPin;
+		string podajPin = "Podaj pin: ";
+		string niePoprawny = "Niepoprwany pin. Sprobuj ponownie. ";
 
-	do {
-		wypiszTekst(podajPin, 1);
-		cin >> tmpPin;
-		dane = listaKont.poprawnyPin(tmpPin);
-		if (dane != nullptr)
-		{
-			czyPoprawnyPin = true;
-		}
-		else
-		{
-			clean();
-			wypiszTekst(niePoprawny, 0);
-		}
-		cin.clear();
-		cin.ignore(1000, '\n');
-	} while (tmpPin < 1000 || tmpPin > 9999 || dane == nullptr);
+		do {
+			wypiszTekst(podajPin, 1);
+			cin >> tmpPin;
+			dane = listaKont.poprawnyPin(tmpPin);
+			if (dane != nullptr)
+			{
+				czyPoprawnyPin = true;
+			}
+			else
+			{
+				clean();
+				wypiszTekst(niePoprawny, 0);
+			}
+			cin.clear();
+			cin.ignore(1000, '\n');
+		} while (tmpPin < 1000 || tmpPin > 9999 || dane == nullptr);
 
-	clean();
-	startMenu();
+		clean();
+		startMenu();
+	}
 }
 
 void startMenu()
