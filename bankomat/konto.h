@@ -13,7 +13,7 @@ struct konto {
 extern struct konta {
 	konto* pierwsze=nullptr;
 	bool wczytaj();
-	int aktualizacja(konto*);
+	void aktualizacja(konto*);
 	void wyswietl();
 	konto* poprawnyPin(unsigned int );
 } listaKont;

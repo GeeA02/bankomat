@@ -46,14 +46,14 @@ bool konta::wczytaj()
 	}
 	else
 	{
-		cout << "Nie udalo sie poprawnie zaladowac pliku. Nacisnij klawisz aby kontynuowac...";
+		wypiszTekst("Nie udalo sie poprawnie zaladowac pliku. Nacisnij klawisz aby kontynuowac...",1);
 		getchar();
 		return false;
 	}
 }
 
 
-int konta::aktualizacja(konto* tmpDane)
+void konta::aktualizacja(konto* tmpDane)
 {
 	ofstream dane;
 	dane.open("dane.txt", ios::trunc);
@@ -71,11 +71,10 @@ int konta::aktualizacja(konto* tmpDane)
 	}
 	else
 	{
-		cout << "Nie udalo sie poprawnie zaladowac pliku. Nacisnij klawisz aby kontynuowac...";
+		wypiszTekst("Nie udalo sie poprawnie zaladowac pliku. Nacisnij klawisz aby kontynuowac...",1);
 		getchar();
 	}
 	dane.close();
-	return 0;
 }
 
  konto* konta::poprawnyPin(unsigned int PIN)
